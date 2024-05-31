@@ -1,4 +1,4 @@
-//Brute Force Solution
+//Brute Force Solution with O(N^2)
 class Solution {
 public:
     vector<int> twoSum(vector<int>& nums, int target) {
@@ -16,5 +16,42 @@ public:
             }
         }
         return ans;
+    }
+};
+
+//Better Solution with O(2N)
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        map<int,int> hash;
+        for(int i=0;i<nums.size();i++)
+            hash[nums[i]]=i;
+        for(int i=0;i<nums.size();i++)
+        {
+            int complement=target-nums[i];
+            if(hash.find(complement)!=hash.end() && hash[complement]!=i)
+            {
+                return {i,hash[complement]};
+            }
+        }
+        return {};
+    }
+};
+
+//Optimal Solution with O(N)
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        map<int,int> hash;
+        for(int i=0;i<nums.size();i++)
+        {
+            int complement=target-nums[i];
+            if(hash.find(complement)!=hash.end() && hash[complement]!=i)
+            {
+                return {i,hash[complement]};
+            }
+            hash[nums[i]]=i;
+        }
+        return {};
     }
 };
