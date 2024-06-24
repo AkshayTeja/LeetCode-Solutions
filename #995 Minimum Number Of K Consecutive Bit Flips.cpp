@@ -15,7 +15,7 @@ public:
 
             if (nums[i] == flip) 
             { 
-                if (i + k > n) 
+                if (i+k> ) 
                 {  
                     return -1;
                 }
