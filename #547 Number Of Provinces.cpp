@@ -1,6 +1,6 @@
 class Solution {
 public:
-    void dfs(int node,vector<vector<int>> adj,vector<int> &visited)
+    void dfs(int node,vector<vector<int>> &adj,vector<int> &visited)
     {
         visited[node]=1;
         for(auto it:adj[node])
@@ -22,7 +22,6 @@ public:
                 if(isConnected[i][j]==1 && i!=j)
                 {
                     adj[i].push_back(j);
-                    adj[j].push_back(i);
                 }
             }
         }
