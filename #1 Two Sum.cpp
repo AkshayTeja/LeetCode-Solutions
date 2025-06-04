@@ -1,56 +1,101 @@
-//Brute Force Solution with O(N^2)
-class Solution {
+// Brute Force Solution with O(N^2)
+class Solution
+{
 public:
-    vector<int> twoSum(vector<int>& nums, int target) {
+    vector<int> twoSum(vector<int> &nums, int target)
+    {
         vector<int> ans;
-        for(int i=0;i<nums.size()-1;i++)
+        for (int i = 0; i < nums.size() - 1; i++)
         {
-            for(int j=i+1;j<nums.size();j++)
+            for (int j = i + 1; j < nums.size(); j++)
             {
-                if(nums[i]+nums[j]==target)
+                if (nums[i] + nums[j] == target)
                 {
                     ans.push_back(i);
                     ans.push_back(j);
                 }
-
             }
         }
         return ans;
     }
 };
 
-//Better Solution with O(2N)
-class Solution {
+// Better Solution with O(2N)
+class Solution
+{
 public:
-    vector<int> twoSum(vector<int>& nums, int target) {
-        map<int,int> hash;
-        for(int i=0;i<nums.size();i++)
-            hash[nums[i]]=i;
-        for(int i=0;i<nums.size();i++)
+    vector<int> twoSum(vector<int> &nums, int target)
+    {
+        map<int, int> hash;
+        for (int i = 0; i < nums.size(); i++)
+            hash[nums[i]] = i;
+        for (int i = 0; i < nums.size(); i++)
         {
-            int complement=target-nums[i];
-            if(hash.find(complement)!=hash.end() && hash[complement]!=i)
+            int complement = target - nums[i];
+            if (hash.find(complement) != hash.end() && hash[complement] != i)
             {
-                return {i,hash[complement]};
+                return {i, hash[complement]};
             }
         }
         return {};
     }
 };
 
-//Optimal Solution with O(N)
-class Solution {
+// Optimal Solution with O(N)
+class Solution
+{
 public:
-    vector<int> twoSum(vector<int>& nums, int target) {
-        map<int,int> hash;
-        for(int i=0;i<nums.size();i++)
+    vector<int> twoSum(vector<int> &nums, int target)
+    {
+        map<int, int> hash;
+        for (int i = 0; i < nums.size(); i++)
         {
-            int complement=target-nums[i];
-            if(hash.find(complement)!=hash.end() && hash[complement]!=i)
+            int complement = target - nums[i];
+            if (hash.find(complement) != hash.end() && hash[complement] != i)
             {
-                return {i,hash[complement]};
+                return {i, hash[complement]};
             }
-            hash[nums[i]]=i;
+            hash[nums[i]] = i;
+        }
+        return {};
+    }
+};
+
+class Solution
+{
+public:
+    vector<int> twoSum(vector<int> &nums, int target)
+    {
+        map<int, int> mpp;
+        for (int i = 0; i < nums.size(); i++)
+        {
+            for (auto it : mpp)
+            {
+                if (nums[i] + it.first == target)
+                {
+                    return {it.second, i};
+                }
+            }
+            mpp[nums[i]] = i;
+        }
+        return {};
+    }
+};
+
+class Solution
+{
+public:
+    vector<int> twoSum(vector<int> &nums, int target)
+    {
+        map<int, int> mpp;
+        for (int i = 0; i < nums.size(); i++)
+        {
+            int complement = target - nums[i];
+            if (mpp.find(complement) != mpp.end())
+            {
+                return {mpp[complement], i};
+            }
+            mpp[nums[i]] = i;
         }
         return {};
     }
