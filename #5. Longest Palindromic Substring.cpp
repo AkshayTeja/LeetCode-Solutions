@@ -35,3 +35,33 @@ public:
         return s.substr(startIndex, length);
     }
 };
+
+class Solution
+{
+public:
+    string expandFromCenter(int left, int right, string s)
+    {
+        while (left >= 0 && right < s.size() && s[left] == s[right])
+        {
+            left--;
+            right++;
+        }
+        return s.substr(left + 1, right - left - 1);
+    }
+    string longestPalindrome(string s)
+    {
+        if (s.empty())
+            return "";
+        string longest = "";
+        for (int i = 0; i < s.size(); i++)
+        {
+            string p1 = expandFromCenter(i, i, s);
+            string p2 = expandFromCenter(i, i + 1, s);
+            if (p1.size() > longest.size())
+                longest = p1;
+            if (p2.size() > longest.size())
+                longest = p2;
+        }
+        return longest;
+    }
+};
