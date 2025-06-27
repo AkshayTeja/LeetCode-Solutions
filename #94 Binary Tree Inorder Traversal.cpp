@@ -9,25 +9,27 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
-class Solution {
+class Solution
+{
 public:
-    void helper(TreeNode *root,vector<int> &ans)
+    void helper(TreeNode *root, vector<int> &ans)
     {
-        if(root==NULL)
+        if (root == NULL)
             return;
-        helper(root->left,ans);
+        helper(root->left, ans);
         ans.push_back(root->val);
-        helper(root->right,ans);
+        helper(root->right, ans);
     }
 
-    vector<int> inorderTraversal(TreeNode* root) {
+    vector<int> inorderTraversal(TreeNode *root)
+    {
         vector<int> ans;
-        helper(root,ans);
+        helper(root, ans);
         return ans;
     }
 };
 
-//Iterative
+// Iterative
 
 /**
  * Definition for a binary tree node.
@@ -40,28 +42,79 @@ public:
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
-class Solution {
+class Solution
+{
 public:
-    vector<int> inorderTraversal(TreeNode* root) {
-        stack<TreeNode*> st;
+    vector<int> inorderTraversal(TreeNode *root)
+    {
+        stack<TreeNode *> st;
         vector<int> ans;
-        TreeNode *node=root;
+        TreeNode *node = root;
 
-        while(true)
+        while (true)
         {
-            if(node!=NULL)
+            if (node != NULL)
             {
                 st.push(node);
-                node=node->left;
+                node = node->left;
             }
             else
             {
-                if(st.empty())
+                if (st.empty())
                     break;
-                node=st.top();
+                node = st.top();
                 st.pop();
                 ans.push_back(node->val);
-                node=node->right;
+                node = node->right;
+            }
+        }
+        return ans;
+    }
+};
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution
+{
+public:
+    vector<int> inorderTraversal(TreeNode *root)
+    {
+        TreeNode *current = root;
+        vector<int> ans;
+        while (current != NULL)
+        {
+            if (current->left == NULL)
+            {
+                ans.push_back(current->val);
+                current = current->right;
+            }
+            else
+            {
+                TreeNode *predecessor = current->left;
+                while (predecessor->right != NULL && predecessor->right != current)
+                {
+                    predecessor = predecessor->right;
+                }
+                if (predecessor->right == NULL)
+                {
+                    predecessor->right = current;
+                    current = current->left;
+                }
+                else
+                {
+                    predecessor->right = NULL;
+                    ans.push_back(current->val);
+                    current = current->right;
+                }
             }
         }
         return ans;
